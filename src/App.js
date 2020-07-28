@@ -1,13 +1,43 @@
-import React from 'react';
-import './App.css';
-import TrafficLight from './components/TrafficLight';
+import React, { Component } from "react";
+import "./App.css";
+import TrafficLight from "./components/TrafficLight";
 
-function App() {
-  return (
-    <div className="App">
-      <TrafficLight />
-    </div>
-  );
+const RED = 0;
+const YELLOW = 1;
+const GREEN = 2;
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      currentColor: RED,
+    };
+    setInterval(() => {
+      this.setState({
+        currentColor: this.getNextColor(this.state.currentColor),
+      });
+    }, 2500);
+  }
+  getNextColor(color) {
+    switch (color) {
+      case RED:
+        return YELLOW;
+      case YELLOW:
+        return GREEN;
+      case GREEN:
+        return RED;
+      default:
+        return RED;
+    }
+  }
+  render() {
+    const { currentColor } = this.state;
+    return (
+      <div className="App">
+        <TrafficLight currentColor={currentColor}/>
+      </div>
+    );
+  }
 }
 
 export default App;
